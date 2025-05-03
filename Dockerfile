@@ -4,11 +4,12 @@ FROM node:18
 # Set the working directory in the container
 WORKDIR /app
 
-# Install FFmpeg and other dependencies
+# Install FFmpeg and other dependencies for Opus and MP3 encoding
 RUN apt-get update && apt-get install -y \
 	ffmpeg \
 	libflac-dev \
 	libmp3lame-dev \
+	libopus-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Copy package.json and package-lock.json (if available)
@@ -20,7 +21,7 @@ RUN npm install
 # Copy the rest of the application files into the container
 COPY . .
 
-# Install TypeScript globally and compile the TypeScript files
+# Install TypeScript globally
 RUN npm install -g typescript
 
 # Compile the TypeScript files into JavaScript
